@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bạn hợp ngành nào? – Khoa CNTT Đại học Lạc Hồng</title>
+<style>
+  :root{
+    --bg:#0b1020; --panel:#121a33; --line:#24305a; --text:#eef2ff; --muted:#9aa6c9;
+    --brand:#2f6bff; --brand2:#00d1b2; --warn:#ffcc33;
+    --cntt:#2f6bff; --ttdpt:#ff5c8a; --ai:#9b5cff; --attt:#00c48c; --tmdt:#ff9f1c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+  a{color:inherit}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:20;background:rgba(11,16,32,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{font-weight:800;letter-spacing:.5px}
+  .logo span{color:var(--brand2)}
+  nav ul{display:flex;gap:22px;list-style:none}
+  nav ul a{text-decoration:none;color:var(--muted);font-size:15px}
+  nav ul a:hover{color:var(--text)}
+  @media(max-width:700px){nav ul{display:none}}
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;padding:90px 0 80px;text-align:center}
+  .hero::before{content:"";position:absolute;inset:-40%;background:
+     radial-gradient(circle at 30% 30%,rgba(47,107,255,.35),transparent 40%),
+     radial-gradient(circle at 70% 60%,rgba(0,209,178,.25),transparent 40%),
+     radial-gradient(circle at 50% 90%,rgba(155,92,255,.25),transparent 40%);
+     animation:float 14s ease-in-out infinite alternate;z-index:-1}
+  @keyframes float{to{transform:translate(4%,-3%) rotate(8deg)}}
+  .tag{display:inline-block;padding:6px 14px;border:1px solid var(--line);border-radius:99px;color:var(--brand2);font-size:14px;margin-bottom:18px}
+  .hero h1{font-size:clamp(32px,6vw,58px);line-height:1.15;font-weight:900}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);max-width:640px;margin:18px auto 30px;font-size:18px}
+  .btn{display:inline-block;border:0;cursor:pointer;font-weight:700;font-size:17px;padding:15px 30px;border-radius:14px;
+       background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;text-decoration:none;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(47,107,255,.4)}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+  .stats{display:flex;justify-content:center;gap:40px;margin-top:46px;flex-wrap:wrap}
+  .stats b{display:block;font-size:28px}
+  .stats small{color:var(--muted)}
+
+  section{padding:70px 0}
+  .h2{font-size:clamp(26px,4vw,38px);font-weight:800;text-align:center}
+  .sub{text-align:center;color:var(--muted);margin:8px auto 40px;max-width:620px}
+
+  /* MAJORS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;
+        transition:transform .2s,border-color .2s;position:relative;overflow:hidden}
+  .card:hover{transform:translateY(-4px);border-color:var(--c)}
+  .card::after{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:var(--c)}
+  .card .ico{font-size:38px}
+  .card h3{margin:10px 0 6px;font-size:19px}
+  .card p{color:var(--muted);font-size:14px}
+  .card .more{margin-top:12px;font-size:13px;color:var(--c);font-weight:700}
+
+  /* MODAL */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .modal.show{display:flex}
+  .modal .box{background:var(--panel);border:1px solid var(--line);border-radius:20px;max-width:560px;width:100%;padding:30px;position:relative;animation:pop .25s}
+  @keyframes pop{from{transform:scale(.9);opacity:0}}
+  .modal .x{position:absolute;right:16px;top:12px;background:none;border:0;color:var(--muted);font-size:26px;cursor:pointer}
+  .modal h3{font-size:24px;margin-bottom:6px}
+  .modal ul{margin:14px 0 0 20px;color:var(--muted)}
+  .modal li{margin:6px 0}
+  .pill{display:inline-block;font-size:12px;padding:4px 10px;border-radius:99px;margin:4px 4px 0 0;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+
+  /* GAME */
+  .game{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:34px;max-width:760px;margin:0 auto;min-height:420px}
+  .progress{height:8px;background:#0b1020;border-radius:99px;overflow:hidden;margin-bottom:24px}
+  .progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));transition:width .3s}
+  .qnum{color:var(--brand2);font-weight:700;font-size:14px}
+  .q{font-size:clamp(20px,3vw,26px);font-weight:800;margin:8px 0 22px}
+  .opts{display:grid;gap:12px}
+  .opt{text-align:left;background:#0e1530;border:1px solid var(--line);color:var(--text);padding:16px 18px;border-radius:14px;font-size:16px;cursor:pointer;transition:.15s}
+  .opt:hover{border-color:var(--brand2);transform:translateX(4px)}
+  .center{text-align:center}
+  .result-ico{font-size:80px;animation:bounce 1s infinite alternate}
+  @keyframes bounce{to{transform:translateY(-10px)}}
+  .bars{margin:24px 0;text-align:left}
+  .bar{margin:10px 0}
+  .bar span{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+  .bar div{height:10px;background:#0b1020;border-radius:99px;overflow:hidden;margin-top:4px}
+  .bar div i{display:block;height:100%;width:0;transition:width 1s}
+  .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+
+  /* CTA + FOOTER */
+  .cta{background:linear-gradient(135deg,#16245a,#0f3b46);border-radius:24px;padding:46px;text-align:center}
+  .cta h2{font-size:30px;margin-bottom:10px}
+  .cta p{color:#c9d4f5;margin-bottom:22px}
+  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:14px;text-align:center}
+  canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">KHOA <span>CNTT</span> · LHU</div>
+    <ul>
+      <li><a href="#nganh">5 ngành</a></li>
+      <li><a href="#game">Mini game</a></li>
+      <li><a href="#lienhe">Liên hệ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="tag">🎮 Mini game hướng nghiệp</div>
+    <h1>Bạn sinh ra để học<br><em>ngành nào</em> của Khoa CNTT?</h1>
+    <p>Trả lời 7 câu hỏi vui trong 1 phút, hệ thống sẽ “chẩn đoán” ngành hợp với bạn nhất trong 5 ngành của Khoa Công nghệ Thông tin – Đại học Lạc Hồng.</p>
+    <a href="#game" class="btn" onclick="startGame()">Chơi ngay 🚀</a>
+    <a href="#nganh" class="btn ghost" style="margin-left:8px">Xem 5 ngành</a>
+    <div class="stats">
+      <div><b>5</b><small>ngành đào tạo</small></div>
+      <div><b>7</b><small>câu hỏi</small></div>
+      <div><b>60s</b><small>là có kết quả</small></div>
+    </div>
+  </div>
+</header>
+
+<section id="nganh">
+  <div class="wrap">
+    <h2 class="h2">5 ngành – 5 chất riêng</h2>
+    <p class="sub">Bấm vào từng thẻ để xem học gì, làm gì sau khi ra trường.</p>
+    <div class="grid" id="majorGrid"></div>
+  </div>
+</section>
+
+<section id="game">
+  <div class="wrap">
+    <h2 class="h2">Mini game: Ngành nào gọi tên bạn?</h2>
+    <p class="sub">Không có đáp án đúng sai, cứ chọn điều bạn thấy giống mình nhất.</p>
+    <div class="game" id="gameBox"></div>
+  </div>
+</section>
+
+<section id="lienhe">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Tìm ra ngành rồi? Ghé Khoa chơi nhé!</h2>
+      <p>Khu B, 10 Huỳnh Văn Nghệ, Trấn Biên, Đồng Nai · Hotline <b>0946 734 111</b> · ĐT 02513 952 251</p>
+      <a class="btn" href="https://www.facebook.com/cnttlhu" target="_blank">Theo dõi fanpage Khoa</a>
+      <a class="btn ghost" href="https://cs.lhu.edu.vn" target="_blank" style="margin-left:8px">cs.lhu.edu.vn</a>
+    </div>
+  </div>
+</section>
+
+<footer>━━━ ✦ KHOA CNTT – Đại học Lạc Hồng ✦ ━━━</footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="box" id="modalBox"></div>
+</div>
+
+<script>
+/* ====== DỮ LIỆU 5 NGÀNH (sửa nội dung tại đây) ====== */
+const MAJORS = {
+  cntt: {name:"Công nghệ Thông tin", ico:"💻", color:"var(--cntt)",
+    short:"Xây phần mềm, web, app và hệ thống – nền tảng của mọi thứ số.",
+    learn:["Lập trình (C#, Java, Python, JavaScript)","Phát triển web & ứng dụng di động","Cơ sở dữ liệu, điện toán đám mây"],
+    jobs:["Lập trình viên","Kỹ sư phần mềm","Chuyên viên hệ thống / DevOps"],
+    who:"Thích tự tay tạo ra sản phẩm, mê giải đố logic."},
+  ttdpt: {name:"Truyền thông Đa phương tiện", ico:"🎬", color:"var(--ttdpt)",
+    short:"Kể chuyện bằng hình ảnh, video, thiết kế và nội dung số.",
+    learn:["Thiết kế đồ họa, UI/UX","Quay dựng video, nhiếp ảnh, livestream","Sản xuất nội dung & truyền thông số"],
+    jobs:["Content creator","Designer / Editor","Chuyên viên truyền thông – marketing số"],
+    who:"Có gu thẩm mỹ, thích sáng tạo và được nhiều người xem."},
+  ai: {name:"Trí tuệ Nhân tạo", ico:"🤖", color:"var(--ai)",
+    short:"Dạy máy biết nhìn, nghe, hiểu và ra quyết định.",
+    learn:["Học máy, học sâu","Thị giác máy tính, xử lý ngôn ngữ tự nhiên","Robot & IoT thông minh"],
+    jobs:["Kỹ sư AI / ML","Nhà khoa học dữ liệu","Kỹ sư robot – hệ thống thông minh"],
+    who:"Tò mò về tương lai, giỏi toán và thích thử nghiệm."},
+  attt: {name:"An toàn Thông tin", ico:"🛡️", color:"var(--attt)",
+    short:"Bảo vệ dữ liệu, hệ thống và con người trước tấn công mạng.",
+    learn:["Mạng máy tính & bảo mật hệ thống","Kiểm thử xâm nhập (pentest), pháp chứng số","Mật mã học, giám sát an ninh"],
+    jobs:["Chuyên viên bảo mật","Pentester / SOC Analyst","Quản trị hệ thống mạng"],
+    who:"Cẩn thận, thích “săn lỗi” và đóng vai thám tử."},
+  tmdt: {name:"Thương mại Điện tử", ico:"🛒", color:"var(--tmdt)",
+    short:"Kết hợp công nghệ và kinh doanh để bán hàng trên môi trường số.",
+    learn:["Vận hành sàn TMĐT, website bán hàng","Digital marketing, SEO, quảng cáo","Phân tích dữ liệu kinh doanh"],
+    jobs:["Chuyên viên TMĐT","Digital marketer","Khởi nghiệp kinh doanh online"],
+    who:"Nhanh nhạy, thích kinh doanh và con số doanh thu."}
+};
+
+/* ====== CÂU HỎI: mỗi lựa chọn cộng điểm cho 1 ngành ====== */
+const QUESTIONS = [
+  {q:"Cuối tuần rảnh, bạn thường làm gì?", o:[
+    ["Mày mò code một tool nhỏ cho vui","cntt"],["Quay một chiếc vlog / chỉnh ảnh","ttdpt"],
+    ["Đọc tin về ChatGPT, robot mới ra","ai"],["Xem phim hacker, chơi giải đố","attt"],["Lướt Shopee săn deal, tính chuyện bán đồ","tmdt"]]},
+  {q:"Trong nhóm làm bài tập, bạn hay là người…", o:[
+    ["Lo phần kỹ thuật, làm cho nó chạy được","cntt"],["Làm slide, thiết kế cho đẹp","ttdpt"],
+    ["Đề xuất ý tưởng mới lạ","ai"],["Soát lỗi, kiểm tra kỹ từng chi tiết","attt"],["Thuyết trình, thuyết phục người nghe","tmdt"]]},
+  {q:"Chọn một siêu năng lực:", o:[
+    ["Tạo ra bất cứ thứ gì chỉ bằng suy nghĩ","cntt"],["Biến mọi khoảnh khắc thành thước phim","ttdpt"],
+    ["Đọc được suy nghĩ của máy móc","ai"],["Nhìn xuyên mọi bức tường","attt"],["Biết trước món hàng nào sẽ “cháy”","tmdt"]]},
+  {q:"Điện thoại của bạn nhiều app gì nhất?", o:[
+    ["GitHub, VS Code, app ghi chú","cntt"],["CapCut, Canva, Lightroom","ttdpt"],
+    ["Các app AI các loại","ai"],["Trình quản lý mật khẩu, VPN","attt"],["Sàn TMĐT, ví điện tử, app ngân hàng","tmdt"]]},
+  {q:"Một chiếc app bị lỗi, phản ứng đầu tiên của bạn?", o:[
+    ["Tò mò không biết lỗi do code chỗ nào","cntt"],["Chê giao diện xấu nên dễ bấm nhầm","ttdpt"],
+    ["Nghĩ: AI chắc sửa được cái này","ai"],["Lo: có ai đang tấn công không?","attt"],["Tính xem người bán mất bao nhiêu đơn","tmdt"]]},
+  {q:"Môn học bạn thấy “vào” nhất?", o:[
+    ["Tin học","cntt"],["Mỹ thuật / Văn","ttdpt"],["Toán","ai"],["Vật lý – thích tìm quy luật","attt"],["GDKT&PL / Kinh tế","tmdt"]]},
+  {q:"5 năm nữa bạn muốn thấy mình…", o:[
+    ["Là kỹ sư ở công ty công nghệ lớn","cntt"],["Có kênh riêng triệu view / agency sáng tạo","ttdpt"],
+    ["Làm ra sản phẩm AI của riêng mình","ai"],["Là “người gác cổng” bảo mật cho doanh nghiệp","attt"],["Làm chủ một shop online thu nhập ổn","tmdt"]]}
+];
+
+/* ====== RENDER THẺ NGÀNH ====== */
+const grid = document.getElementById("majorGrid");
+Object.entries(MAJORS).forEach(([k,m])=>{
+  const d=document.createElement("div");
+  d.className="card"; d.style.setProperty("--c",m.color);
+  d.innerHTML=`<div class="ico">${m.ico}</div><h3>${m.name}</h3><p>${m.short}</p><div class="more">Xem chi tiết →</div>`;
+  d.onclick=()=>openModal(k);
+  grid.appendChild(d);
+});
+
+function openModal(k){
+  const m=MAJORS[k];
+  document.getElementById("modalBox").innerHTML=`
+    <button class="x" onclick="closeModal()">×</button>
+    <div style="font-size:48px">${m.ico}</div>
+    <h3 style="color:${m.color}">${m.name}</h3>
+    <p style="color:var(--muted)">${m.short}</p>
+    <p style="margin-top:16px"><b>📚 Học gì?</b></p><ul>${m.learn.map(x=>`<li>${x}</li>`).join("")}</ul>
+    <p style="margin-top:16px"><b>💼 Ra trường làm gì?</b></p>
+    <div>${m.jobs.map(x=>`<span class="pill">${x}</span>`).join("")}</div>
+    <p style="margin-top:16px"><b>✨ Hợp với ai?</b> <span style="color:var(--muted)">${m.who}</span></p>`;
+  document.getElementById("modal").classList.add("show");
+}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+
+/* ====== GAME ====== */
+const box=document.getElementById("gameBox");
+let idx=0, score={};
+function intro(){
+  box.innerHTML=`<div class="center" style="padding-top:40px">
+    <div class="result-ico">🎯</div>
+    <h3 class="q">Sẵn sàng khám phá ngành của bạn?</h3>
+    <p style="color:var(--muted);margin-bottom:24px">7 câu hỏi · chọn nhanh theo cảm giác đầu tiên</p>
+    <button class="btn" onclick="startGame()">Bắt đầu</button></div>`;
+}
+function startGame(){
+  idx=0; score={cntt:0,ttdpt:0,ai:0,attt:0,tmdt:0};
+  renderQ();
+}
+function shuffle(a){return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1])}
+function renderQ(){
+  const Q=QUESTIONS[idx];
+  box.innerHTML=`<div class="progress"><i style="width:${idx/QUESTIONS.length*100}%"></i></div>
+    <div class="qnum">CÂU ${idx+1}/${QUESTIONS.length}</div>
+    <div class="q">${Q.q}</div>
+    <div class="opts">${shuffle(Q.o).map(([t,k])=>`<button class="opt" data-k="${k}">${t}</button>`).join("")}</div>`;
+  box.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{score[b.dataset.k]++;idx++;idx<QUESTIONS.length?renderQ():result()});
+}
+function result(){
+  const sorted=Object.entries(score).sort((a,b)=>b[1]-a[1]);
+  const [win]=sorted[0]; const m=MAJORS[win];
+  const total=QUESTIONS.length;
+  box.innerHTML=`<div class="progress"><i style="width:100%"></i></div>
+    <div class="center">
+      <div class="qnum">KẾT QUẢ CỦA BẠN</div>
+      <div class="result-ico">${m.ico}</div>
+      <h3 class="q" style="color:${m.color};margin-bottom:6px">${m.name}</h3>
+      <p style="color:var(--muted)">${m.who}</p>
+    </div>
+    <div class="bars">${sorted.map(([k,v])=>`
+      <div class="bar"><span><b style="color:var(--text)">${MAJORS[k].ico} ${MAJORS[k].name}</b>${Math.round(v/total*100)}%</span>
+      <div><i data-w="${v/total*100}" style="background:${MAJORS[k].color}"></i></div></div>`).join("")}</div>
+    <div class="actions">
+      <button class="btn" onclick="openModal('${win}')">Tìm hiểu ngành này</button>
+      <button class="btn ghost" onclick="startGame()">Chơi lại 🔁</button>
+      <button class="btn ghost" onclick="copyShare('${m.name}')">Chia sẻ kết quả</button>
+    </div>`;
+  setTimeout(()=>box.querySelectorAll(".bar i").forEach(i=>i.style.width=i.dataset.w+"%"),50);
+  confetti();
+}
+function copyShare(name){
+  const t=`Mình vừa chơi mini game của Khoa CNTT – ĐH Lạc Hồng và hợp nhất với ngành ${name}! Còn bạn? 👉 facebook.com/cnttlhu`;
+  navigator.clipboard?.writeText(t).then(()=>alert("Đã copy nội dung, dán lên Facebook nhé!")).catch(()=>prompt("Copy nội dung này:",t));
+}
+
+/* ====== CONFETTI ====== */
+const cv=document.getElementById("confetti"),cx=cv.getContext("2d");
+function confetti(){
+  cv.width=innerWidth;cv.height=innerHeight;
+  const cols=["#2f6bff","#00d1b2","#ff5c8a","#9b5cff","#ff9f1c","#ffcc33"];
+  const ps=Array.from({length:160},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,
+    vx:(Math.random()-.5)*4,vy:2+Math.random()*4,s:5+Math.random()*6,r:Math.random()*6,c:cols[Math.random()*cols.length|0]}));
+  let f=0;(function loop(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.1;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore()});
+    if(++f<180)requestAnimationFrame(loop);else cx.clearRect(0,0,cv.width,cv.height);
+  })();
+}
+
+intro();
+</script>
+</body>

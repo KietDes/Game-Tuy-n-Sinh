@@ -1,0 +1,3 @@
+Bo anh nganh vao thu muc nay, dat ten 1.jpg, 2.jpg, 3.jpg ... (nhan ca .png, .jpeg, .webp).
+Danh so lien tuc, khong bo trong. Anh ngang 16:9 (khoang 1280x720) la dep nhat.
+File nay co the xoa.
